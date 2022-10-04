@@ -10,8 +10,8 @@
 // entirely and just use numbers.
 #define _DEFAULT 0
 #define _LOWER 1
-#define _MEDIA 2
-#define _GAME 3
+#define _GAME 2
+#define _MEDIA 3
 #define _RESET 4
 #define _NAV 5
 #define _NUMPAD 6
@@ -33,6 +33,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS        ,  KC_TRNS    ,  KC_TRNS    ,  KC_TRNS    ,  KC_TRNS    ,  KC_TRNS    ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_RGUI        ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS
   ),
 
+  [_GAME] = LAYOUT(
+    KC_ESC  ,  KC_1  ,  KC_2  ,  KC_3  ,  KC_4  ,  KC_5   ,                       KC_NO  ,  KC_NO               ,  KC_NO               ,  KC_NO         ,  LGUI(LALT(KC_PSCR)) ,  LGUI(LALT(KC_G)) ,
+    KC_TAB  ,  KC_T  ,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R   ,                       KC_NO  ,  KC_NO               ,  KC_UP               ,  KC_NO         ,  KC_NO               ,  KC_NO            ,
+    KC_LCTL ,  KC_G  ,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F   ,                       KC_NO  ,  KC_LEFT             ,  KC_DOWN             ,  KC_RIGHT      ,  KC_NO               ,  MO(_MEDIA)       ,
+    KC_LSFT ,  KC_B  ,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V   ,                       KC_NO  ,  KC_NO               ,  KC_NO               ,  KC_NO         ,  KC_NO               ,  KC_NO            ,
+    KC_I    ,  KC_U  ,  KC_O  ,  KC_P  ,  KC_N  ,  KC_SPC ,  KC_LALT ,  KC_ENT ,  KC_SPC ,  KC_NO               ,  KC_NO               ,  KC_NO         ,  KC_NO               ,  TO(_DEFAULT)
+  ),
+
   [_MEDIA] = LAYOUT(
     KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,                        KC_TRNS ,  KC_TRNS             ,  KC_TRNS             ,  KC_TRNS       ,  KC_TRNS,  TO(_RESET) ,
     KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,                        KC_TRNS ,  KC_MEDIA_PREV_TRACK ,  KC_MEDIA_NEXT_TRACK ,  KC_TRNS       ,  KC_TRNS,  KC_TRNS    ,
@@ -41,16 +49,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS ,  KC_TRNS             ,  KC_TRNS             ,  KC_TRNS       ,  KC_TRNS,  KC_TRNS
   ),
 
-  [_GAME] = LAYOUT(
-    KC_ESC  ,  KC_1  ,  KC_2  ,  KC_3  ,  KC_4  ,  KC_5   ,                    KC_NO  ,  KC_NO               ,  KC_NO               ,  KC_NO         ,  LGUI(LALT(KC_PSCR)) ,  LGUI(LALT(KC_G)) ,
-    KC_TAB  ,  KC_T  ,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R   ,                    KC_NO  ,  KC_MEDIA_PREV_TRACK ,  KC_MEDIA_NEXT_TRACK ,  KC_NO         ,  KC_NO               ,  KC_NO            ,
-    KC_LCTL ,  KC_G  ,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F   ,                    KC_NO  ,  KC_AUDIO_VOL_DOWN   ,  KC_AUDIO_VOL_UP     ,  KC_AUDIO_MUTE ,  KC_NO               ,  KC_NO            ,
-    KC_LSFT ,  KC_B  ,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V   ,                    KC_NO  ,  KC_NO               ,  KC_MEDIA_PLAY_PAUSE ,  KC_NO         ,  KC_NO               ,  KC_NO            ,
-    KC_U    ,  KC_I  ,  KC_O  ,  KC_P  ,  KC_N  ,  KC_SPC ,  KC_M ,  KC_ENT ,  KC_ENT ,  KC_SPC              ,  KC_NO               ,  KC_NO         ,  KC_NO               ,  TO(_DEFAULT)
-  ),
-
   [_RESET] = LAYOUT(
-    RESET ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                      KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO        ,
+    KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  RESET ,                      KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO        ,
     KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                      KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO        ,
     KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                      KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO        ,
     KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                      KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO        ,
@@ -97,11 +97,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case _LOWER:
         rgblight_sethsv (0xE3, 0xFF, 0x80);
         break;
-    case _MEDIA:
-        rgblight_sethsv (0x55, 0xFF, 0x80);
-        break;
     case _GAME:
         rgblight_sethsv (0xC6, 0xFF, 0x80);
+        break;
+    case _MEDIA:
+        rgblight_sethsv (0x55, 0xFF, 0x80);
         break;
     case _NAV:
         rgblight_sethsv (0xAA, 0xFF, 0x80);
